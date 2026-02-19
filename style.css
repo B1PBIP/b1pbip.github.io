@@ -1,7 +1,7 @@
 header {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: larger;
-    color: rgb(88, 135, 255);
+    color: rgb(59, 89, 167);
     background-color: rgb(43, 2, 18);
     margin: 0;
     padding: 20px;
@@ -26,7 +26,6 @@ body {
 a {
     color: rgb(88,135,255);
     text-decoration: none;
-    font-size: larger;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
