@@ -1,34 +1,108 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8"/>
-        <title>La tour (jumelle) de Babel</title>
-        <link rel="shorcut icon" type="image/x-icon" href="41418.jpg"/>
-        <link rel="stylesheet" href="style.css" type="text/css"/>
-    </head>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>La tour (jumelle) de Babel</title>
+    <link rel="shortcut icon" type="image/x-icon" href="41418.jpg"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
 
-    <body>
-        <header>
-            <h1>Bienvenue sur la tour de Babel bis!</h1>
-        </header>
-        <p><h2>Oh grande bipbip apportez moi vos connaissances approfondies en tout les domaines<br>ce site grandit de jour en jour et ses infos aussi,
-        merci de participer à ce project (de merde) mais fait sans IA! Youpi! Je sauve la planète<br> Je tiens à préciser que je ne garantis en rien la véracitée du contenu de ce site</h2></p>
-        <p><h2>Vous ne trouvez pas de réponses à votre question? Posez la!<br> Des remarques? Allez vous faire foutre!<br>
-        Bon n'hésitez pas d'aller à bipbipolettre@gmail.com</h2></p>
-        <p><h2>Vous pouvez trouver ci-dessous vos thèmes préférés par ordre alphabéthique (grosse flemme de faire une fonction recherche)</h2></p>
-        <section class="carte"> <!--B-->
-            <h1>Les trucs en B</h1>
-            <a  href="bosnie.html">La bosnie</a>
-        </section>
-        <br>
-        <section class="carte"><!--D-->
-            <h1>Les trucs en D</h1>
-            <a href="demineur.html">Le démineur</a>
-        </section>
-        <br>
-        <section class="carte"><!--R-->
-            <h1>Les trucs en R</h1>
-            <a href="rallyhouse.html">La Rally House</a>
-        </section>
-    </body>
+<body>
+<header>
+    <h1>Bienvenue sur la tour de Babel bis!</h1>
+</header>
+
+<p>
+<h2>
+Oh grande bipbip apportez moi vos connaissances approfondies en tout les domaines<br>
+ce site grandit de jour en jour et ses infos aussi, merci de participer à ce project (de merde)<br>
+Je sauve la planète<br>
+Je tiens à préciser que je ne garantis en rien la véracité du contenu de ce site
+</h2>
+</p>
+
+<p>
+<h2>
+Vous ne trouvez pas de réponses à votre question? Posez la!<br>
+Des remarques? Allez vous faire foutre!<br>
+Bon n'hésitez pas d'aller à bipbipolettre@gmail.com
+</h2>
+</p>
+
+<h2>Index automatique par ordre alphabétique :</h2>
+
+<input type="text" id="searchInput" placeholder="Rechercher un thème..." onkeyup="filterSections()">
+
+<!-- ICI tu mets TOUS tes liens, sans te soucier des lettres -->
+<div id="rawLinks" style="display:none;">
+    <a href="bosnie.html">Bosnie</a>
+    <a href="banane.html">Banane</a>
+    <a href="bombe.html">Bombe</a>
+    <a href="demineur.html">Démineur</a>
+    <a href="rallyhouse.html">Rally House</a>
+    <a href="avion.html">Avion</a>
+</div>
+
+<!-- Le script va générer les sections ici -->
+<div id="container"></div>
+
+<script>
+const rawLinks = Array.from(document.querySelectorAll("#rawLinks a"));
+const container = document.getElementById("container");
+
+const groups = {};
+
+// regrouper par première lettre
+rawLinks.forEach(link => {
+  const text = link.textContent.trim();
+  const letter = text[0].toUpperCase();
+
+  if (!groups[letter]) {
+    groups[letter] = [];
+  }
+  groups[letter].push(link);
+});
+
+// trier les lettres
+const sortedLetters = Object.keys(groups).sort();
+
+// créer les sections
+sortedLetters.forEach(letter => {
+  const section = document.createElement("section");
+  section.className = "carte";
+
+  const title = document.createElement("h1");
+  title.textContent = "Les trucs en " + letter;
+  section.appendChild(title);
+
+  // trier les liens dans la section
+  groups[letter].sort((a, b) =>
+    a.textContent.localeCompare(b.textContent, "fr", { sensitivity: "base" })
+  );
+
+  groups[letter].forEach(link => {
+    const newLink = link.cloneNode(true);
+    section.appendChild(newLink);
+  });
+
+  container.appendChild(section);
+});
+
+// recherche
+function filterSections() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const sections = document.querySelectorAll(".carte");
+
+  sections.forEach(section => {
+    const text = section.textContent.toLowerCase();
+    section.style.display = text.includes(input) ? "" : "none";
+  });
+}
+</script>
+
+<footer>
+    <p>La tour de Babel bis — archive sacrée du savoir douteux</p>
+</footer>
+
+</body>
 </html>

@@ -13,47 +13,35 @@ body {
     background-color: rgb(7, 10, 12);
     color: rgb(129, 149, 149);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 10px;
 }
 
 .carte {
     background-color: rgb(61, 14, 14);
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 1px;
     border-radius: 10px;
-    font-family: 'Trebuchet MS', Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: medium;
 }
 
-.carte h1 {
-    margin-bottom: 8px;
-}
-
-/* 🔥 IMPORTANT : un lien = une ligne */
-.carte a {
-    display: block;
+a {
     color: rgb(88,135,255);
     text-decoration: none;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    margin-left: 10px;
-    margin-bottom: 4px;
 }
 
-.carte a:hover {
+a:hover {
     text-decoration: underline;
 }
 
-input {
-    padding: 6px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    border: none;
+.infos {
+    text-align: right;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(129, 149, 149)
 }
 
 footer {
     background-color: rgb(43, 2, 18);
     text-align: center;
     padding: 10px;
-    margin-top: 40px;
-    border-radius: 8px;
+    margin: 40px;
 }
