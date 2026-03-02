@@ -45,3 +45,8 @@ footer {
     padding: 10px;
     margin: 40px;
 }
+
+.image {
+    width: 200px;
+    height: auto;
+}
