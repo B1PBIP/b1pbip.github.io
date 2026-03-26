@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>La tour (jumelle) de Babel</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" type="image/x-icon" href="41418.jpg">
+    </head>
+
+    <body>
+        <header>
+            <h1>Bienvenue sur la tour de Babel bis!</h1>
+        </header>
+        <h2>
+          Oh grande bipbip apportez moi vos connaissances approfondies en tout les domaines<br>
+          ce site grandit de jour en jour et ses infos aussi, merci de participer à ce project (de merde)<br>
+          Je sauve la planète<br>
+          Je tiens à préciser que je ne garantis en rien la véracité du contenu de ce site
+          <br>Merci pour l'attente et voilà la v2!
+        </h2>
+        <br>
+        <h2>
+          Pour toute remarque aller à @ombeuh.line sur insta!
+        </h2>
+        <br>
+        <h2>
+          Voilà les thème et plus en dessous de la page il y a des cours.
+        </h2>
+        
+        <input type="text" id="searchInput" placeholder="Rechercher un thème..." onkeyup="filterSections()">
+        
+        <div id="rawLinks" style="display:none;">
+            <a href="bosnie.html">Bosnie</a>
+            <a href="banane.html">Banane</a>
+            <a href="demineur.html">Démineur</a>
+            <a href="rallyhouse.html">Rally House</a>
+            <a href="musique.html">Musique</a>
+            <a href="bipbip.html">Bipbip</a>
+            <a href="schizophrénie.html">Schizophrénie</a>
+            <a href="napoleon.html">Napoléon</a>
+            <a href="spitfire.html">Spitfire</a>
+            <a href="avion.html">Avion</a>
+        </div>
+        
+        <div id="container"></div>
+        <br>
+        <h2>
+          Et bien ici il y a des cours, bref je crois que c'est rangé par ordre alphabétique. Euuh c'est mes cours à moi
+          me faites pas chier pour avoir les votres, je les ai pas, j'ai pas envie de les avoir.
+        </h2>
+
+        <div id="link-container">
+            <a href="cours\maths première\mathindex.html">Mathématiques</a>
+        </div>
+        
+    </body>
+
+<script>
+const rawLinks = Array.from(document.querySelectorAll("#rawLinks a"));
+const container = document.getElementById("container");
+
+const groups = {};
+
+// regrouper par première lettre
+rawLinks.forEach(link => {
+  const text = link.textContent.trim();
+  const letter = text[0].toUpperCase();
+
+  if (!groups[letter]) {
+    groups[letter] = [];
+  }
+  groups[letter].push(link);
+});
+
+// trier les lettres
+const sortedLetters = Object.keys(groups).sort();
+
+// créer les sections
+sortedLetters.forEach(letter => {
+  const section = document.createElement("section");
+  section.className = "carte";
+
+  const title = document.createElement("h1");
+  title.textContent = "Les trucs en " + letter;
+  section.appendChild(title);
+
+  // trier les liens dans la section
+  groups[letter].sort((a, b) =>
+    a.textContent.localeCompare(b.textContent, "fr", { sensitivity: "base" })
+  );
+
+  groups[letter].forEach(link => {
+  const newLink = link.cloneNode(true);
+  section.appendChild(newLink);
+  section.appendChild(document.createElement("br"));
+});
+
+  container.appendChild(section);
+});
+
+// recherche
+function filterSections() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const sections = document.querySelectorAll(".carte");
+
+  sections.forEach(section => {
+    const links = section.querySelectorAll("a");
+    let visibleLinks = 0;
+
+    links.forEach(link => {
+      const text = link.textContent.toLowerCase();
+
+      if (text.includes(input)) {
+        link.style.display = "block";
+        visibleLinks++;
+      } else {
+        link.style.display = "none";
+      }
+    });
+
+    // cacher la section si aucun lien visible
+    if (visibleLinks === 0) {
+      section.style.display = "none";
+    } else {
+      section.style.display = "";
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("link-container");
+  const links = Array.from(container.querySelectorAll("a"));
+
+  links.sort((a, b) =>
+    a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase())
+  );
+
+  links.forEach(link => container.appendChild(link));
+});
+}
+
+</script>
+</html>
