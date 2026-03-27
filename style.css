@@ -202,3 +202,75 @@ h1 em {
     font-size: 14px;
     color: #a7a9be;
 }
+
+.card {
+    background: #1a1a2e;
+    border: 1px solid #2e2d3d;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent, #ff8906);
+    border-radius: 12px 12px 0 0;
+}
+
+.card:hover {
+    border-color: #ff8906;
+    transform: translateY(-2px);
+}
+
+  .card:nth-child(1) { --accent: #ff8906; }
+  .card:nth-child(2) { --accent: #e53170; }
+  .card:nth-child(2)::before { background: #e53170; }
+  .card:nth-child(2):hover { border-color: #e53170; }
+  .card:nth-child(3) { --accent: #f25f4c; }
+  .card:nth-child(3)::before { background: #f25f4c; }
+  .card:nth-child(3):hover { border-color: #f25f4c; }
+  .card:nth-child(4) { --accent: #0f3460; border-color: #1a3a6e; }
+  .card:nth-child(4)::before { background: #5390d9; }
+  .card:nth-child(4):hover { border-color: #5390d9; }
+  .card:nth-child(5) { --accent: #7400b8; border-color: #2d1040; }
+  .card:nth-child(5)::before { background: #9b5de5; }
+  .card:nth-child(5):hover { border-color: #9b5de5; }
+  .card:nth-child(6) { --accent: #00b4d8; border-color: #0d2e3a; }
+  .card:nth-child(6)::before { background: #00b4d8; }
+  .card:nth-child(6):hover { border-color: #00b4d8; }
+
+  .card h1 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a7a9be;
+    margin-bottom: 12px;
+}
+
+.card a {
+    color: var(--accent, #ff8906);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    margin-left: 0;
+    margin-bottom: 6px;
+    transition: color 0.15s;
+}
+
+.card a:hover {
+    text-decoration: underline;
+    color: #fffffe;
+}
+
+.card img {
+    position: center;
+}
