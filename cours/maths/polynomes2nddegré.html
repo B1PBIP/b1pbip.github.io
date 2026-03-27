@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaBel = Polynômes du second degré</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  a {
+    color: #06ffc1;
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    transition: color 0.15s;
+  }
+
+  a:hover {
+    color: #ff8906;
+    text-decoration: underline;
+  }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0f0e17;
+    color: #fffffe;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .page {
+    max-width: 700px;
+    width: 100%;
+  }
+
+  header {
+    margin-bottom: 2.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #a7a9be;
+    border: 1px solid #2e2d3d;
+    border-radius: 4px;
+    padding: 3px 10px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: #fffffe;
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: #ff8906;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #a7a9be;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    background: #1a1a2e;
+    border: 1px solid #2e2d3d;
+    border-radius: 12px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent, #ff8906);
+    border-radius: 12px 12px 0 0;
+  }
+
+  .card:hover {
+    border-color: var(--accent, #ff8906);
+    transform: translateY(-2px);
+  }
+
+  .card:nth-child(1) { --accent: #ff8906; }
+  .card:nth-child(2) { --accent: #e53170; }
+  .card:nth-child(3) { --accent: #f25f4c; }
+  .card:nth-child(4) { --accent: #0f3460; border-color: #1a3a6e; }
+  .card:nth-child(4)::before { background: #5390d9; }
+  .card:nth-child(4):hover { border-color: #5390d9; }
+  .card:nth-child(5) { --accent: #7400b8; border-color: #2d1040; }
+  .card:nth-child(5)::before { background: #9b5de5; }
+  .card:nth-child(5):hover { border-color: #9b5de5; }
+  .card:nth-child(6) { --accent: #00b4d8; border-color: #0d2e3a; }
+  .card:nth-child(6)::before { background: #00b4d8; }
+  .card:nth-child(6):hover { border-color: #00b4d8; }
+
+  .card h3 {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a7a9be;
+    margin-bottom: 12px;
+  }
+
+  .formula {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: #fffffe;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 7px 12px;
+    margin: 5px 0;
+    display: block;
+  }
+
+  .formula b {
+    color: var(--accent, #ff8906);
+    font-weight: 500;
+  }
+
+  footer {
+    margin-top: 2rem;
+    font-size: 12px;
+    color: #4a4a6a;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="tag">Première — Spé maths</div>
+    <h1>Polynômes du <em>second degré</em></h1>
+    <p class="subtitle">f(x) = ax² + bx + c &nbsp;·&nbsp; a ≠ 0</p>
+    <a href="../../index.html">Je veux retourner à l'acceuil cette page me fait peur</a> <br>
+    <a href="../../indexs/mathindex.html">Index des cours de maths</a>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Discriminant</h3>
+      <span class="formula"><b>Δ</b> = b² − 4ac</span>
+    </div>
+
+    <div class="card">
+      <h3>Racines (si Δ ≥ 0)</h3>
+      <span class="formula">x = (−b ± √<b>Δ</b>) / 2a</span>
+    </div>
+
+    <div class="card">
+      <h3>Sommet S(α ; β)</h3>
+      <span class="formula"><b>α</b> = −b / 2a</span>
+      <span class="formula"><b>β</b> = −Δ / 4a</span>
+    </div>
+
+    <div class="card">
+      <h3>Forme canonique</h3>
+      <span class="formula">f(x) = a(x − <b>α</b>)² + <b>β</b></span>
+    </div>
+
+    <div class="card">
+      <h3>Relations racines-coeff.</h3>
+      <span class="formula">x₁ + x₂ = <b>−b/a</b></span>
+      <span class="formula">x₁ × x₂ = <b>c/a</b></span>
+    </div>
+
+    <div class="card">
+      <h3>Forme factorisée (Δ &gt; 0)</h3>
+      <span class="formula">f(x) = a(x − <b>x₁</b>)(x − <b>x₂</b>)</span>
+    </div>
+  </div>
+
+  <footer>polynômes · second degré · formules essentielles</footer>
+</div>
+</body>
+</html>
