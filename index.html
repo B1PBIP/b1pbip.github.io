@@ -20,11 +20,12 @@
         </h2>
         <br>
         <h2>
-          Voilà les thème et plus en dessous de la page il y a des cours.
+          Voilà les sujets et plus en dessous de la page il y a les thèmes et dans les thèmes y'a des cours
         </h2>
         
-        <input type="text" id="searchInput" placeholder="Rechercher un thème..." onkeyup="filterSections()">
+        <input type="text" id="searchInput" placeholder="Rechercher un sujet ou un thème..." onkeyup="filterSections()">
         
+        <!-- ===== SUJETS (données brutes) ===== -->
         <div id="rawLinks" style="display:none;">
             <a href="PAGE/bosnie.html">Bosnie</a>
             <a href="PAGE/banane.html">Banane</a>
@@ -34,66 +35,81 @@
             <a href="PAGE/schizophrénie.html">Schizophrénie</a>
             <a href="PAGE/napoleon.html">Napoléon</a>
             <a href="PAGE/spitfire.html">Spitfire</a>
-            <a href="PAGE/avion.html">Avion</a>
+            <a href="cours/maths/polynomes2nddegré.html">polynomes du second degré</a>
+        </div>
+
+        <!-- ===== THÈMES (données brutes) — ajoute tes thèmes ici ===== -->
+        <div id="rawThemes" style="display:none;">
+            <a href="thèmes/mathindex.html">Mathématiques</a>
+            <a href="thèmes/avion.html">Avions</a>
         </div>
         
+        <!-- ===== SUJETS : cartes générées par JS ===== -->
+        <h2>Sujets</h2>
         <div id="container"></div>
-        <br>
-        <h2>
-          Et bien ici il y a des cours, bref je crois que c'est rangé par ordre alphabétique. Euuh c'est mes cours à moi
-          me faites pas chier pour avoir les votres, je les ai pas, j'ai pas envie de les avoir.
-        </h2>
 
-        <div id="link-container">
-            <a href="indexs/mathindex.html">Mathématiques</a>
-        </div>
+        <br>
+
+        <!-- ===== THÈMES : cartes générées par JS ===== -->
+        <h2>Thèmes</h2>
+        <div id="containerThemes"></div>
         
     </body>
 
 <script>
-const rawLinks = Array.from(document.querySelectorAll("#rawLinks a"));
-const container = document.getElementById("container");
+// ─── Utilitaire : construit des cartes .carte par lettre ───────────────────
+function buildCartes(rawContainerId, outputContainerId) {
+  const rawLinks = Array.from(document.querySelectorAll("#" + rawContainerId + " a"));
+  const container = document.getElementById(outputContainerId);
+  const groups = {};
 
-const groups = {};
+  rawLinks.forEach(link => {
+    const text = link.textContent.trim();
+    // normalise pour la lettre (retire les accents)
+    const letter = text[0].toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!groups[letter]) groups[letter] = [];
+    groups[letter].push(link);
+  });
 
-// regrouper par première lettre
-rawLinks.forEach(link => {
-  const text = link.textContent.trim();
-  const letter = text[0].toUpperCase();
+  const sortedLetters = Object.keys(groups).sort();
 
-  if (!groups[letter]) {
-    groups[letter] = [];
-  }
-  groups[letter].push(link);
+  sortedLetters.forEach(letter => {
+    const section = document.createElement("section");
+    section.className = "carte";
+    section.dataset.source = outputContainerId; // pour filtrer par zone
+
+    const title = document.createElement("h1");
+    title.textContent = "Les trucs en " + letter;
+    section.appendChild(title);
+
+    groups[letter].sort((a, b) =>
+      a.textContent.localeCompare(b.textContent, "fr", { sensitivity: "base" })
+    );
+
+    groups[letter].forEach(link => {
+      const newLink = link.cloneNode(true);
+      section.appendChild(newLink);
+      section.appendChild(document.createElement("br"));
+    });
+
+    container.appendChild(section);
+  });
+}
+
+// ─── Construction des deux sections ────────────────────────────────────────
+buildCartes("rawLinks",  "container");
+buildCartes("rawThemes", "containerThemes");
+
+// ─── Tri alphabétique du bloc cours ────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", () => {
+  const lc = document.getElementById("link-container");
+  if (!lc) return;
+  const links = Array.from(lc.querySelectorAll("a"));
+  links.sort((a, b) => a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()));
+  links.forEach(link => lc.appendChild(link));
 });
 
-// trier les lettres
-const sortedLetters = Object.keys(groups).sort();
-
-// créer les sections
-sortedLetters.forEach(letter => {
-  const section = document.createElement("section");
-  section.className = "carte";
-
-  const title = document.createElement("h1");
-  title.textContent = "Les trucs en " + letter;
-  section.appendChild(title);
-
-  // trier les liens dans la section
-  groups[letter].sort((a, b) =>
-    a.textContent.localeCompare(b.textContent, "fr", { sensitivity: "base" })
-  );
-
-  groups[letter].forEach(link => {
-  const newLink = link.cloneNode(true);
-  section.appendChild(newLink);
-  section.appendChild(document.createElement("br"));
-});
-
-  container.appendChild(section);
-});
-
-// recherche
+// ─── Recherche (sujets + thèmes) ───────────────────────────────────────────
 function filterSections() {
   const input = document.getElementById("searchInput").value.toLowerCase();
   const sections = document.querySelectorAll(".carte");
@@ -104,7 +120,6 @@ function filterSections() {
 
     links.forEach(link => {
       const text = link.textContent.toLowerCase();
-
       if (text.includes(input)) {
         link.style.display = "block";
         visibleLinks++;
@@ -113,25 +128,8 @@ function filterSections() {
       }
     });
 
-    // cacher la section si aucun lien visible
-    if (visibleLinks === 0) {
-      section.style.display = "none";
-    } else {
-      section.style.display = "";
-    }
+    section.style.display = visibleLinks === 0 ? "none" : "";
   });
-
-  document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("link-container");
-  const links = Array.from(container.querySelectorAll("a"));
-
-  links.sort((a, b) =>
-    a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase())
-  );
-
-  links.forEach(link => container.appendChild(link));
-});
 }
-
 </script>
 </html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Les fruits de BaBel</title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="shortcut icon" type="image/x-icon" href="../41418.jpg">
+    </head>
+    <body>
+        <header>
+            <div class="tag">
+                <a href="fruit.html">Fruit</a>
+            </div>
+            <h1>Tout sur les <em>Fruits</em></h1>
+            <a href="../index.html">Je veux retourner à l'acceuil cette page me fait peur</a>
+        </header>
+        <div class="card">
+            <h1>C'est quoi?</h1>
+            <h2>C'est les machins qui poussent sur les arbres et que souvent on peut les manger</h2>
+        </div>
+        <input type="text" id="searchInput" placeholder="Rechercher un fruit" onkeyup="filterSections()">
+        <div id="rawLinks" style="display: none;">
+            <a href="../PAGE/banane.html">Bananes</a>
+        </div>
+        <div id="container"></div>
+    </body>
+
+    <script>
+// ─── Utilitaire : construit des cartes .carte par lettre ───────────────────
+function buildCartes(rawContainerId, outputContainerId) {
+  const rawLinks = Array.from(document.querySelectorAll("#" + rawContainerId + " a"));
+  const container = document.getElementById(outputContainerId);
+  const groups = {};
+
+  rawLinks.forEach(link => {
+    const text = link.textContent.trim();
+    // normalise pour la lettre (retire les accents)
+    const letter = text[0].toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!groups[letter]) groups[letter] = [];
+    groups[letter].push(link);
+  });
+
+  const sortedLetters = Object.keys(groups).sort();
+
+  sortedLetters.forEach(letter => {
+    const section = document.createElement("section");
+    section.className = "carte";
+    section.dataset.source = outputContainerId; // pour filtrer par zone
+
+    const title = document.createElement("h1");
+    title.textContent = "Les fruits en " + letter;
+    section.appendChild(title);
+
+    groups[letter].sort((a, b) =>
+      a.textContent.localeCompare(b.textContent, "fr", { sensitivity: "base" })
+    );
+
+    groups[letter].forEach(link => {
+      const newLink = link.cloneNode(true);
+      section.appendChild(newLink);
+      section.appendChild(document.createElement("br"));
+    });
+
+    container.appendChild(section);
+  });
+}
+
+// ─── Construction des deux sections ────────────────────────────────────────
+buildCartes("rawLinks",  "container");
+buildCartes("rawThemes", "containerThemes");
+
+// ─── Tri alphabétique du bloc cours ────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", () => {
+  const lc = document.getElementById("link-container");
+  if (!lc) return;
+  const links = Array.from(lc.querySelectorAll("a"));
+  links.sort((a, b) => a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase()));
+  links.forEach(link => lc.appendChild(link));
+});
+
+// ─── Recherche (sujets + thèmes) ───────────────────────────────────────────
+function filterSections() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const sections = document.querySelectorAll(".carte");
+
+  sections.forEach(section => {
+    const links = section.querySelectorAll("a");
+    let visibleLinks = 0;
+
+    links.forEach(link => {
+      const text = link.textContent.toLowerCase();
+      if (text.includes(input)) {
+        link.style.display = "block";
+        visibleLinks++;
+      } else {
+        link.style.display = "none";
+      }
+    });
+
+    section.style.display = visibleLinks === 0 ? "none" : "";
+  });
+}
+</script>
+</html>

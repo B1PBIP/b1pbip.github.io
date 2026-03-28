@@ -171,6 +171,18 @@ input {
     margin-bottom: 14px;
 }
 
+.tag a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12rem;
+    text-transform: uppercase;
+    color: #a7a9be;
+}
+
+.tag a:hover {
+    text-decoration: wavy;
+    color: #fffffe;
+}
 a {
     color: #06ffc1;
     text-decoration: none;
